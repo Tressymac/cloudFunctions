@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhotoMapper</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/index.js"></script>
+</head>
+<body>
+    <ul>
+        <li><a class="active" href="index.html">Home</a></li>
+        <li><a href="index.html">Photo Mapper</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">About</a></li>
+    </ul>
+
+    <div class="imageContainer">
+        <img src="./images/flower.png" alt="" class="traditional">
+    </div>
+    <div class="container">
+        <div id="map"></div>
+    </div>
+
+    <div class="ButtonHolder" id="showForm" onclick="showNewPhotoItem()">
+        <button class="button-56" role="button">Upload image</button>
+    </div>
+
+    <div class="newPhoto" id="form" style="display: none;">
+        <form method='post' action='upload' enctype="multipart/form-data">
+            <label for='file'>Select a file to upload:</label><br />
+            <input type='file' name='file' /><br />
+            <input type='submit' />
+          </form>
+    </div>
+
+    <script defer type="text/javascript">
+        function showNewPhotoItem (){
+            document.querySelector(".newPhoto").style.display="grid";
+        };
+        document.querySelector("#showForm").click = showNewPhotoItem;
+    </script>
+
+    <script 
+        defer 
+        type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8HJAc4U9fl9WfgOMus-XFP3jrPwIZ5wQ&callback=initMap">
+    </script>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+        
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { getFirestore, doc, getDoc, getDocs, query, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+    
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+        apiKey: "AIzaSyD8HJAc4U9fl9WfgOMus-XFP3jrPwIZ5wQ",
+        authDomain: "photobucket-jessymac1-pm.firebaseapp.com",
+        projectId: "photobucket-jessymac1-pm",
+        storageBucket: "photobucket-jessymac1-pm.appspot.com",
+        messagingSenderId: "415285923009",
+        appId: "1:415285923009:web:c6fc3a5bc724431ac15840"
+        };
+    
+        // Initialize Firebase
+        const fbapp = initializeApp(firebaseConfig);
+
+        // Access the firestore database
+        const db = getFirestore(fbapp);
+
+        // Test query the documents in the photos collection 
+        const q = query(collection(db, "photos"));
+
+        // Set an array of markers on the map
+        let markersArray = [];
+
+        // Create a listener function that watches a snapshot based on a query 
+        const listener = onSnapshot(q, (querySnapshot) => {
+            // SET THE BOUNDARIES OF THE MAP
+            const bounds = new google.maps.LatLngBounds();
+
+            // Clear existing markers form the map
+            markersArray.forEach((marker) => {
+                console.log('Deleting marker!');
+                marker.setMap(null);
+            });
+
+            // Loop through the documents found in the snapshot
+            querySnapshot.forEach((doc) => {
+            console.log(`doc.thumb => ${doc.data().thumb256_url}`);
+            const photoLat = doc.data().Latitude;
+            const photoLon = doc.data().Longitude;
+
+            // Create a new latlan object with the photo's lat/lon
+            const mylatLng = { lat: photoLat, lng: photoLon};
+
+            // Extend the map bounds to emcompass this point
+            const loc = new google.maps.LatLng(photoLat, photoLon);
+            bounds.extend(loc);
+
+            // Place the marker where the thumbnail image will go 
+            const marker = new google.maps.Marker({
+                position: mylatLng,
+                map, 
+                title: "Hello, world!",
+                icon: doc.data().thumb64_url
+            });
+
+            console.log("Adding marker to map!");
+            markersArray.push(marker);
+
+        }); // End of forEach loop over the document
+
+            // Move and recenter the map to fit the boundries
+            map.fitBounds(bounds);
+            map.panToBounds(bounds);
+            if (map.zoom > 15) {
+                map.setZoom(15);
+            }
+
+    }); // End of our listener function
+
+
+
+    </script>
+</body>
+</html>

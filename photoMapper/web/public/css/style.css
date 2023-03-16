@@ -1,0 +1,153 @@
+#map {
+    height: 100%;
+    border-radius: 3%;
+
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    width: 50%;
+    height: 600px;
+    margin-left: 25%;
+    margin-top: 5%;
+    border: #D94032 solid 4px;
+    border-radius: 3%;
+}
+
+body{
+    background-color: #8C6185;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #152340;
+}
+  
+li {
+    float: left;
+}
+  
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+  
+li a:hover:not(.active) {
+    background-color: rgb(82, 46, 67);
+}
+  
+.active {
+    background-color: rgba(126, 70, 104, 0.616);
+}
+
+.button-56 {
+  align-items: center;
+  background-color: #D9D6D2;
+  border: 2px solid #262626;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #111;
+  cursor: pointer;
+  display: flex;
+  font-family: Inter,sans-serif;
+  font-size: 16px;
+  height: 48px;
+  justify-content: center;
+  line-height: 24px;
+  max-width: 100%;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-56:after {
+  background-color: #262626;
+  border-radius: 8px;
+  content: "";
+  display: block;
+  height: 48px;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform .2s ease-out;
+  z-index: -1;
+}
+
+.button-56:hover:after {
+  transform: translate(0, 0);
+}
+
+.button-56:active {
+  background-color: #ffdeda;
+  outline: 0;
+}
+
+.button-56:hover {
+  outline: 0;
+}
+
+@media (min-width: 768px) {
+  .button-56 {
+    padding: 0 40px;
+  }
+}
+
+.ButtonHolder{
+    margin-left: 45%;
+    margin-top: 2%;
+}
+
+.imageContainer{
+    position: absolute;
+    width: 400px;
+    top: 55%;
+}
+
+.traditional{
+    width: 100%;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgb(0, 0, 0);
+    border-radius: 10px;
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #152340;
+    border-radius: 10px;
+}
+
+.newPhoto{
+    position: relative;
+    z-index: 99;
+    margin-left: 42%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border: red solid 2px;
+    width: 300px;
+    text-align: center;
+    justify-items: center;
+}
